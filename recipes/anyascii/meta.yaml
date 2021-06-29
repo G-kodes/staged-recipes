@@ -1,0 +1,55 @@
+{% set name = "anyascii" %}
+{% set version = "0.2.0" %}
+{% sha256 = '7036c5fdefa40fe9d73a6552ac4f2821916a2a29c1368925f0b7846e536bd2ac' %}
+
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/anyascii-{{ version }}.tar.gz
+  sha256: {{ sha256 }}
+
+build:
+  number: 0
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv
+
+requirements:
+  host:
+    - pip
+    - python >=3.6
+  run:
+    - python >=3.6
+
+test:
+  imports:
+    - anyascii
+    - anyascii._data
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/anyascii/anyascii
+  license: ISC
+  license_family: ISC
+  license_file: LICENSE.txt
+  summary: 'Unicode to ASCII transliteration - Python'
+  description: |
+    Converts Unicode text to a reasonable representation using only ASCII.
+    For most characters in Unicode, AnyAscii provides an ASCII-only replacement string.
+    Text is converted character-by-character without considering the context. The mappings
+    for each script are based on popular existing romanization schemes. Symbolic characters
+    are converted based on their meaning or appearance. All ASCII characters in the input are
+    left unchanged, every other character is replaced with printable ASCII characters.
+    Unknown characters are removed.
+  doc_url: https://github.com/anyascii/anyascii
+  dev_url: https://github.com/anyascii/anyascii
+
+extra:
+  recipe-maintainers:
+    - hunterwb
+    - casept
